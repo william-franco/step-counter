@@ -51,9 +51,9 @@ class _SettingViewState extends State<SettingView> {
               title: const Text('Dark theme'),
               trailing: ValueListenableBuilder<SettingModel>(
                 valueListenable: settingController,
-                builder: (context, value, widget) {
+                builder: (context, settingModel, widget) {
                   return Switch(
-                    value: value.isDarkTheme,
+                    value: settingModel.isDarkTheme,
                     onChanged: (bool isDarkTheme) {
                       settingController.changeTheme(isDarkTheme: isDarkTheme);
                     },

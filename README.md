@@ -11,7 +11,32 @@ The project is structured in a modular way, where each new functionality must be
 ### Directory tree
 
 ```
-
+lib/
+    └── src/
+        ├── common/
+        │   ├── constants/
+        │   ├── dependency_injectors/
+        │   ├── routes/
+        │   └── services/
+        └── features/
+            ├── permission/
+            │   ├── controllers/
+            │   ├── models/
+            │   ├── repositories/
+            │   ├── routes/
+            │   └── views/
+            ├── settings/
+            │   ├── controllers/
+            │   ├── models/
+            │   ├── repositories/
+            │   ├── routes/
+            │   └── views/
+            └── step/
+                ├── controllers/
+                ├── models/
+                ├── repositories/
+                ├── routes/
+                └── views/
 ```
 
 

@@ -40,16 +40,14 @@ class _PermissionViewState extends State<PermissionView> {
       body: Center(
         child: ValueListenableBuilder<PermissionModel>(
           valueListenable: permissionController,
-          builder: (context, model, child) {
-            if (model.isGranted) {
-              // Exibe uma mensagem de carregamento enquanto navega
+          builder: (context, permissionModel, child) {
+            if (permissionModel.isGranted) {
               return Text(
                 'Permission granted. Navigating...',
                 style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               );
             } else {
-              // Exibe uma mensagem solicitando permissão
               return Text(
                 'Step permission is not granted. Please enable it in settings.',
                 style: Theme.of(context).textTheme.headlineMedium,
