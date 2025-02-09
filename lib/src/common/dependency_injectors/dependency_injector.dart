@@ -2,13 +2,15 @@ import 'package:get_it/get_it.dart';
 import 'package:step_counter/src/common/services/storage_service.dart';
 import 'package:step_counter/src/features/permission/controllers/permission_controller.dart';
 import 'package:step_counter/src/features/permission/repositories/permission_repository.dart';
+import 'package:step_counter/src/features/step/controllers/step_controller.dart';
+import 'package:step_counter/src/features/step/repositories/step_repository.dart';
 
 final locator = GetIt.instance;
 
 void dependencyInjector() {
   _startStorageService();
   _startFeaturePermission();
-  _startFeatureScanner();
+  _startFeatureStep();
   _startFeatureSetting();
 }
 
@@ -29,9 +31,14 @@ void _startFeaturePermission() {
   );
 }
 
-void _startFeatureScanner() {
-  locator.registerLazySingleton<ScannerController>(
-    () => ScannerControllerImpl(),
+void _startFeatureStep() {
+  locator.registerCachedFactory<StepRepository>(
+    () => StepRepositoryImpl(),
+  );
+  locator.registerLazySingleton<StepController>(
+    () => StepControllerImpl(
+      stepRepository: locator<StepRepository>(),
+    ),
   );
 }
 
@@ -51,7 +58,7 @@ void _startFeatureSetting() {
 Future<void> initDependencies() async {
   await Future.wait([
     locator<SettingController>().loadTheme(),
-    locator<PermissionController>().initCameraPermission(),
+    locator<PermissionController>().initStepPermission(),
   ]);
 }
 

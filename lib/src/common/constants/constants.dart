@@ -6,6 +6,6 @@ class Constants {
 
   static const String pathChannel = String.fromEnvironment(
     'pathChannel',
-    defaultValue: 'my-channel',
+    defaultValue: 'br.com.williamfranco.step_counter/step_counter',
   );
 }

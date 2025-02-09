@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
 import 'package:step_counter/src/features/permission/controllers/permission_controller.dart';
 import 'package:step_counter/src/features/permission/models/permission_model.dart';
+import 'package:step_counter/src/features/step/routes/step_routes.dart';
 
 class PermissionView extends StatefulWidget {
   const PermissionView({super.key});
@@ -25,7 +26,7 @@ class _PermissionViewState extends State<PermissionView> {
 
   void _handlePermissionState() {
     if (permissionController.value.isGranted) {
-      context.go('');
+      context.go(StepRoutes.steps);
     }
   }
 
