@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
+import 'package:step_counter/src/common/routes/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

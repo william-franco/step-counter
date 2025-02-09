@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:step_counter/src/features/permission/routes/permission_routes.dart';
 
 class Routes {
   static final GoRouter routes = GoRouter(

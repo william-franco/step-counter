@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:step_counter/src/common/services/storage_service.dart';
+import 'package:step_counter/src/features/permission/controllers/permission_controller.dart';
+import 'package:step_counter/src/features/permission/repositories/permission_repository.dart';
 
 final locator = GetIt.instance;
 
