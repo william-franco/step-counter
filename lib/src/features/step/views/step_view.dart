@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
+import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
 import 'package:step_counter/src/features/step/controllers/step_controller.dart';
 import 'package:step_counter/src/features/step/models/step_model.dart';
 
@@ -30,7 +31,7 @@ class _StepViewState extends State<StepView> {
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
-              context.push('');
+              context.push(SettingRoutes.setting);
             },
           ),
         ],
