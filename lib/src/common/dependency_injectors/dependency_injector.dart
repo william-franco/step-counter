@@ -17,9 +17,7 @@ void dependencyInjector() {
 }
 
 void _startStorageService() {
-  locator.registerLazySingleton<StorageService>(
-    () => StorageServiceImpl(),
-  );
+  locator.registerLazySingleton<StorageService>(() => StorageServiceImpl());
 }
 
 void _startFeaturePermission() {
@@ -34,30 +32,24 @@ void _startFeaturePermission() {
 }
 
 void _startFeatureStep() {
-  locator.registerCachedFactory<StepRepository>(
-    () => StepRepositoryImpl(),
-  );
+  locator.registerCachedFactory<StepRepository>(() => StepRepositoryImpl());
   locator.registerLazySingleton<StepController>(
-    () => StepControllerImpl(
-      stepRepository: locator<StepRepository>(),
-    ),
+    () => StepControllerImpl(stepRepository: locator<StepRepository>()),
   );
 }
 
 void _startFeatureSetting() {
   locator.registerCachedFactory<SettingRepository>(
-    () => SettingRepositoryImpl(
-      storageService: locator<StorageService>(),
-    ),
+    () => SettingRepositoryImpl(storageService: locator<StorageService>()),
   );
   locator.registerLazySingleton<SettingController>(
-    () => SettingControllerImpl(
-      settingRepository: locator<SettingRepository>(),
-    ),
+    () =>
+        SettingControllerImpl(settingRepository: locator<SettingRepository>()),
   );
 }
 
 Future<void> initDependencies() async {
+  await locator<StorageService>().initStorage();
   await Future.wait([
     locator<SettingController>().loadTheme(),
     locator<PermissionController>().initStepPermission(),

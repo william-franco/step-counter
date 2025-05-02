@@ -4,13 +4,15 @@ import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
 import 'package:step_counter/src/features/step/routes/step_routes.dart';
 
 class Routes {
-  static final GoRouter routes = GoRouter(
+  static String get home => PermissionRoutes.permisson;
+
+  GoRouter routes = GoRouter(
     debugLogDiagnostics: true,
-    initialLocation: PermissionRoutes.permisson,
+    initialLocation: home,
     routes: [
-      ...PermissionRoutes.routes,
-      ...StepRoutes.routes,
-      ...SettingRoutes.routes,
+      ...PermissionRoutes().routes,
+      ...StepRoutes().routes,
+      ...SettingRoutes().routes,
     ],
   );
 }

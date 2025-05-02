@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
 import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
 import 'package:step_counter/src/features/step/controllers/step_controller.dart';
-import 'package:step_counter/src/features/step/models/step_model.dart';
 
 class StepView extends StatefulWidget {
   const StepView({super.key});
@@ -19,6 +18,7 @@ class _StepViewState extends State<StepView> {
   void initState() {
     super.initState();
     stepController = locator<StepController>();
+    stepController.initialize();
   }
 
   @override
@@ -37,11 +37,11 @@ class _StepViewState extends State<StepView> {
         ],
       ),
       body: Center(
-        child: ValueListenableBuilder<StepModel>(
-          valueListenable: stepController,
-          builder: (context, stepModel, child) {
+        child: ListenableBuilder(
+          listenable: stepController,
+          builder: (context, child) {
             return Text(
-              'Steps: ${stepModel.steps}',
+              'Steps: ${stepController.stepModel.steps}',
               style: TextStyle(fontSize: 24),
             );
           },

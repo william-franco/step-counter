@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:step_counter/src/features/step/models/step_model.dart';
 import 'package:step_counter/src/features/step/repositories/step_repository.dart';
 
-typedef _Controller = ValueNotifier<StepModel>;
+typedef _Controller = ChangeNotifier;
 
 abstract interface class StepController extends _Controller {
-  StepController() : super(StepModel());
+  StepModel get stepModel;
 
   Future<void> initialize();
-
   Future<void> updateSteps(int steps);
 }
 
 class StepControllerImpl extends _Controller implements StepController {
   final StepRepository stepRepository;
 
-  StepControllerImpl({required this.stepRepository}) : super(StepModel()) {
-    initialize();
-  }
+  StepControllerImpl({required this.stepRepository});
+
+  StepModel _stepModel = StepModel();
+
+  @override
+  StepModel get stepModel => _stepModel;
 
   @override
   Future<void> initialize() async {
@@ -28,8 +30,9 @@ class StepControllerImpl extends _Controller implements StepController {
 
   @override
   Future<void> updateSteps(int steps) async {
-    if (value.steps != steps) {
-      value = StepModel(steps: steps);
+    if (_stepModel.steps != steps) {
+      _stepModel = StepModel(steps: steps);
+      notifyListeners();
     }
   }
 }
