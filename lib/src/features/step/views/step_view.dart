@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
 import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
 import 'package:step_counter/src/features/step/controllers/step_controller.dart';
 
 class StepView extends StatefulWidget {
-  const StepView({super.key});
+  final StepController stepController;
+
+  const StepView({super.key, required this.stepController});
 
   @override
   State<StepView> createState() => _StepViewState();
@@ -17,7 +18,7 @@ class _StepViewState extends State<StepView> {
   @override
   void initState() {
     super.initState();
-    stepController = locator<StepController>();
+    stepController = widget.stepController;
     stepController.initialize();
   }
 

@@ -1,25 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
 import 'package:step_counter/src/features/settings/controllers/setting_controller.dart';
 
-class SettingView extends StatefulWidget {
-  const SettingView({super.key});
+class SettingView extends StatelessWidget {
+  final SettingController settingController;
 
-  @override
-  State<SettingView> createState() => _SettingViewState();
-}
+  const SettingView({super.key, required this.settingController});
 
-class _SettingViewState extends State<SettingView> {
-  late final SettingController settingController;
-
-  @override
-  void initState() {
-    super.initState();
-    settingController = locator<SettingController>();
-  }
-
-  void _showAboutDialog() {
+  void _showAboutDialog(BuildContext context) {
     showAboutDialog(
       context: context,
       applicationIcon: const FlutterLogo(),
@@ -64,7 +52,7 @@ class _SettingViewState extends State<SettingView> {
               leading: const Icon(Icons.info_outline),
               title: const Text('About'),
               onTap: () {
-                _showAboutDialog();
+                _showAboutDialog(context);
               },
             ),
           ],

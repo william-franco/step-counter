@@ -6,7 +6,9 @@ import 'package:step_counter/src/features/step/routes/step_routes.dart';
 class Routes {
   static String get home => PermissionRoutes.permisson;
 
-  GoRouter routes = GoRouter(
+  GoRouter get routes => _routes;
+
+  final GoRouter _routes = GoRouter(
     debugLogDiagnostics: true,
     initialLocation: home,
     routes: [

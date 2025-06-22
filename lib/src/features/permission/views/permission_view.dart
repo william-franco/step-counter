@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
 import 'package:step_counter/src/features/permission/controllers/permission_controller.dart';
 import 'package:step_counter/src/features/step/routes/step_routes.dart';
 
 class PermissionView extends StatefulWidget {
-  const PermissionView({super.key});
+  final PermissionController permissionController;
+
+  const PermissionView({super.key, required this.permissionController});
 
   @override
   State<PermissionView> createState() => _PermissionViewState();
@@ -17,7 +18,7 @@ class _PermissionViewState extends State<PermissionView> {
   @override
   void initState() {
     super.initState();
-    permissionController = locator<PermissionController>();
+    permissionController = widget.permissionController;
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _handlePermissionState();
     });
