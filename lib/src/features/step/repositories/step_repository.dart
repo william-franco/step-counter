@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:step_counter/src/common/constants/constants.dart';
+import 'package:step_counter/src/common/constants/value_constant.dart';
 
 abstract interface class StepRepository {
   Future<void> startListening();
@@ -10,7 +10,7 @@ abstract interface class StepRepository {
 }
 
 class StepRepositoryImpl implements StepRepository {
-  static const MethodChannel _channel = MethodChannel(Constants.pathChannel);
+  static final _channel = MethodChannel(ValueConstant.pathChannel);
 
   @override
   Future<void> startListening() async {

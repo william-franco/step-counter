@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
-import 'package:step_counter/src/features/settings/controllers/setting_controller.dart';
+import 'package:step_counter/src/features/settings/view_models/setting_view_model.dart';
 import 'package:step_counter/src/features/settings/views/setting_view.dart';
 
 class SettingRoutes {
@@ -12,7 +12,7 @@ class SettingRoutes {
     GoRoute(
       path: setting,
       builder: (context, state) {
-        return SettingView(settingController: locator<SettingController>());
+        return SettingView(settingViewModel: locator<SettingViewModel>());
       },
     ),
   ];

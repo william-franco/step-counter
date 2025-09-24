@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/common/dependency_injectors/dependency_injector.dart';
-import 'package:step_counter/src/features/step/controllers/step_controller.dart';
+import 'package:step_counter/src/features/step/view_models/step_view_model.dart';
 import 'package:step_counter/src/features/step/views/step_view.dart';
 
 class StepRoutes {
@@ -12,7 +12,7 @@ class StepRoutes {
     GoRoute(
       path: steps,
       builder: (context, state) {
-        return StepView(stepController: locator<StepController>());
+        return StepView(stepViewModel: locator<StepViewModel>());
       },
     ),
   ];

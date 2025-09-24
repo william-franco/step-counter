@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:step_counter/src/features/settings/models/setting_model.dart';
 import 'package:step_counter/src/features/settings/repositories/setting_repository.dart';
 
-typedef _Controller = ChangeNotifier;
+typedef _ViewModel = ChangeNotifier;
 
-abstract interface class SettingController extends _Controller {
+abstract interface class SettingViewModel extends _ViewModel {
   SettingModel get settingModel;
 
-  Future<void> loadTheme();
+  Future<void> getTheme();
   Future<void> changeTheme({required bool isDarkTheme});
 }
 
-class SettingControllerImpl extends _Controller implements SettingController {
+class SettingViewModelImpl extends _ViewModel implements SettingViewModel {
   final SettingRepository settingRepository;
 
-  SettingControllerImpl({required this.settingRepository});
+  SettingViewModelImpl({required this.settingRepository});
 
   SettingModel _settingModel = SettingModel();
 
@@ -22,22 +22,21 @@ class SettingControllerImpl extends _Controller implements SettingController {
   SettingModel get settingModel => _settingModel;
 
   @override
-  Future<void> loadTheme() async {
-    bool isDarkTheme = await settingRepository.readTheme();
-    final settingModel = SettingModel(isDarkTheme: isDarkTheme);
-    _emit(settingModel);
+  Future<void> getTheme() async {
+    final model = await settingRepository.readTheme();
+    _emit(model);
   }
 
   @override
   Future<void> changeTheme({required bool isDarkTheme}) async {
+    final model = _settingModel.copyWith(isDarkTheme: isDarkTheme);
     await settingRepository.updateTheme(isDarkTheme: isDarkTheme);
-    final settingModel = SettingModel(isDarkTheme: isDarkTheme);
-    _emit(settingModel);
+    _emit(model);
   }
 
   void _emit(SettingModel newValue) {
     _settingModel = newValue;
     notifyListeners();
-    debugPrint('SettingController: ${_settingModel.isDarkTheme}');
+    debugPrint('SettingController: ${settingModel.isDarkTheme}');
   }
 }

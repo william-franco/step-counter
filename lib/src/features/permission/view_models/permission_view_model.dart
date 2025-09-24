@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:step_counter/src/features/permission/models/permission_model.dart';
 import 'package:step_counter/src/features/permission/repositories/permission_repository.dart';
 
-typedef _Controller = ChangeNotifier;
+typedef _ViewModel = ChangeNotifier;
 
-abstract interface class PermissionController extends _Controller {
+abstract interface class PermissionViewModel extends _ViewModel {
   PermissionModel get permissionModel;
 
   Future<void> initStepPermission();
 }
 
-class PermissionControllerImpl extends _Controller
-    implements PermissionController {
+class PermissionViewModelImpl extends _ViewModel
+    implements PermissionViewModel {
   final PermissionRepository permissionRepository;
 
-  PermissionControllerImpl({required this.permissionRepository});
+  PermissionViewModelImpl({required this.permissionRepository});
 
   PermissionModel _permissionModel = PermissionModel();
 
@@ -24,7 +24,7 @@ class PermissionControllerImpl extends _Controller
   @override
   Future<void> initStepPermission() async {
     final isGranted = await permissionRepository.checkAndRequestPermission();
-    _permissionModel = PermissionModel(isGranted: isGranted);
+    _permissionModel = _permissionModel.copyWith(isGranted: isGranted);
     notifyListeners();
   }
 }

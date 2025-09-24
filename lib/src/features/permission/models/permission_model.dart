@@ -1,7 +1,8 @@
 class PermissionModel {
-  bool isGranted;
+  final bool isGranted;
 
-  PermissionModel({
-    this.isGranted = false,
-  });
+  PermissionModel({this.isGranted = false});
+
+  PermissionModel copyWith({bool? isGranted}) =>
+      PermissionModel(isGranted: isGranted ?? this.isGranted);
 }

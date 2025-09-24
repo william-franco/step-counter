@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:step_counter/src/features/step/models/step_model.dart';
 import 'package:step_counter/src/features/step/repositories/step_repository.dart';
 
-typedef _Controller = ChangeNotifier;
+typedef _ViewModel = ChangeNotifier;
 
-abstract interface class StepController extends _Controller {
+abstract interface class StepViewModel extends _ViewModel {
   StepModel get stepModel;
 
   Future<void> initialize();
   Future<void> updateSteps(int steps);
 }
 
-class StepControllerImpl extends _Controller implements StepController {
+class StepViewModelImpl extends _ViewModel implements StepViewModel {
   final StepRepository stepRepository;
 
-  StepControllerImpl({required this.stepRepository});
+  StepViewModelImpl({required this.stepRepository});
 
   StepModel _stepModel = StepModel();
 
@@ -31,7 +31,7 @@ class StepControllerImpl extends _Controller implements StepController {
   @override
   Future<void> updateSteps(int steps) async {
     if (_stepModel.steps != steps) {
-      _stepModel = StepModel(steps: steps);
+      _stepModel = _stepModel.copyWith(steps: steps);
       notifyListeners();
     }
   }

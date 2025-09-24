@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
-import 'package:step_counter/src/features/step/controllers/step_controller.dart';
+import 'package:step_counter/src/features/step/view_models/step_view_model.dart';
 
 class StepView extends StatefulWidget {
-  final StepController stepController;
+  final StepViewModel stepViewModel;
 
-  const StepView({super.key, required this.stepController});
+  const StepView({super.key, required this.stepViewModel});
 
   @override
   State<StepView> createState() => _StepViewState();
 }
 
 class _StepViewState extends State<StepView> {
-  late final StepController stepController;
-
   @override
   void initState() {
     super.initState();
-    stepController = widget.stepController;
-    stepController.initialize();
+    widget.stepViewModel.initialize();
   }
 
   @override
@@ -39,10 +36,10 @@ class _StepViewState extends State<StepView> {
       ),
       body: Center(
         child: ListenableBuilder(
-          listenable: stepController,
+          listenable: widget.stepViewModel,
           builder: (context, child) {
             return Text(
-              'Steps: ${stepController.stepModel.steps}',
+              'Steps: ${widget.stepViewModel.stepModel.steps}',
               style: TextStyle(fontSize: 24),
             );
           },
