@@ -16,7 +16,18 @@ class _StepViewState extends State<StepView> {
   @override
   void initState() {
     super.initState();
-    widget.stepViewModel.initialize();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _initialize();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<void> _initialize() async {
+    await widget.stepViewModel.initialize();
   }
 
   @override

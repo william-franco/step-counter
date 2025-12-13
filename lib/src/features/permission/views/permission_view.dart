@@ -16,9 +16,14 @@ class _PermissionViewState extends State<PermissionView> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((duration) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _handlePermissionState();
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void _handlePermissionState() {
