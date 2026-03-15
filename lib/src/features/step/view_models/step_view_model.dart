@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:step_counter/src/common/state_management/state_management.dart';
 import 'package:step_counter/src/features/step/models/step_model.dart';
 import 'package:step_counter/src/features/step/repositories/step_repository.dart';
 
-typedef _ViewModel = ChangeNotifier;
+typedef _ViewModel = StateManagement<StepModel>;
 
 abstract interface class StepViewModel extends _ViewModel {
-  StepModel get stepModel;
+  StepViewModel(super.initialState);
 
   Future<void> initialize();
   Future<void> updateSteps(int steps);
@@ -14,12 +15,7 @@ abstract interface class StepViewModel extends _ViewModel {
 class StepViewModelImpl extends _ViewModel implements StepViewModel {
   final StepRepository stepRepository;
 
-  StepViewModelImpl({required this.stepRepository});
-
-  StepModel _stepModel = StepModel();
-
-  @override
-  StepModel get stepModel => _stepModel;
+  StepViewModelImpl({required this.stepRepository}) : super(StepModel());
 
   @override
   Future<void> initialize() async {
@@ -30,9 +26,14 @@ class StepViewModelImpl extends _ViewModel implements StepViewModel {
 
   @override
   Future<void> updateSteps(int steps) async {
-    if (_stepModel.steps != steps) {
-      _stepModel = _stepModel.copyWith(steps: steps);
-      notifyListeners();
+    if (state.steps != steps) {
+      final model = state.copyWith(steps: steps);
+      _emit(model);
     }
+  }
+
+  void _emit(StepModel newState) {
+    emitState(newState);
+    debugPrint('StepViewModel: ${state.steps}');
   }
 }

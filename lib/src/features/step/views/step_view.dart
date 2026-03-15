@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:step_counter/src/common/state_management/state_management.dart';
 import 'package:step_counter/src/features/settings/routes/setting_routes.dart';
+import 'package:step_counter/src/features/step/models/step_model.dart';
 import 'package:step_counter/src/features/step/view_models/step_view_model.dart';
 
 class StepView extends StatefulWidget {
@@ -46,11 +48,11 @@ class _StepViewState extends State<StepView> {
         ],
       ),
       body: Center(
-        child: ListenableBuilder(
-          listenable: widget.stepViewModel,
-          builder: (context, child) {
+        child: StateBuilderWidget<StepViewModel, StepModel>(
+          viewModel: widget.stepViewModel,
+          builder: (context, stepModel) {
             return Text(
-              'Steps: ${widget.stepViewModel.stepModel.steps}',
+              'Steps: ${stepModel.steps}',
               style: TextStyle(fontSize: 24),
             );
           },

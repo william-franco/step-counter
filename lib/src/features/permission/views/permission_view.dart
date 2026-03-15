@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:step_counter/src/common/state_management/state_management.dart';
+import 'package:step_counter/src/features/permission/models/permission_model.dart';
 import 'package:step_counter/src/features/permission/view_models/permission_view_model.dart';
 import 'package:step_counter/src/features/step/routes/step_routes.dart';
 
@@ -27,7 +29,7 @@ class _PermissionViewState extends State<PermissionView> {
   }
 
   void _handlePermissionState() {
-    if (widget.permissionViewModel.permissionModel.isGranted) {
+    if (widget.permissionViewModel.state.isGranted) {
       context.go(StepRoutes.steps);
     }
   }
@@ -37,10 +39,10 @@ class _PermissionViewState extends State<PermissionView> {
     return Scaffold(
       appBar: AppBar(centerTitle: false, title: const Text('Permission Check')),
       body: Center(
-        child: ListenableBuilder(
-          listenable: widget.permissionViewModel,
-          builder: (context, child) {
-            if (widget.permissionViewModel.permissionModel.isGranted) {
+        child: StateBuilderWidget<PermissionViewModel, PermissionModel>(
+          viewModel: widget.permissionViewModel,
+          builder: (context, permissionModel) {
+            if (permissionModel.isGranted) {
               return Text(
                 'Permission granted. Navigating...',
                 style: Theme.of(context).textTheme.headlineMedium,
