@@ -6,8 +6,6 @@ import 'package:step_counter/src/features/step/repositories/step_repository.dart
 typedef _ViewModel = StateManagement<StepModel>;
 
 abstract interface class StepViewModel extends _ViewModel {
-  StepViewModel(super.initialState);
-
   Future<void> initialize();
   Future<void> updateSteps(int steps);
 }
@@ -15,7 +13,10 @@ abstract interface class StepViewModel extends _ViewModel {
 class StepViewModelImpl extends _ViewModel implements StepViewModel {
   final StepRepository stepRepository;
 
-  StepViewModelImpl({required this.stepRepository}) : super(StepModel());
+  StepViewModelImpl({required this.stepRepository});
+
+  @override
+  StepModel build() => StepModel();
 
   @override
   Future<void> initialize() async {

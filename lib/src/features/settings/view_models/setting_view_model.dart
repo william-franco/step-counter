@@ -6,8 +6,6 @@ import 'package:step_counter/src/features/settings/repositories/setting_reposito
 typedef _ViewModel = StateManagement<SettingModel>;
 
 abstract interface class SettingViewModel extends _ViewModel {
-  SettingViewModel(super.initialState);
-
   Future<void> getTheme();
   Future<void> changeTheme({required bool isDarkTheme});
 }
@@ -15,8 +13,10 @@ abstract interface class SettingViewModel extends _ViewModel {
 class SettingViewModelImpl extends _ViewModel implements SettingViewModel {
   final SettingRepository settingRepository;
 
-  SettingViewModelImpl({required this.settingRepository})
-    : super(SettingModel());
+  SettingViewModelImpl({required this.settingRepository});
+
+  @override
+  SettingModel build() => SettingModel();
 
   @override
   Future<void> getTheme() async {

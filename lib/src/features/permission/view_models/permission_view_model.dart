@@ -6,8 +6,6 @@ import 'package:step_counter/src/features/permission/repositories/permission_rep
 typedef _ViewModel = StateManagement<PermissionModel>;
 
 abstract interface class PermissionViewModel extends _ViewModel {
-  PermissionViewModel(super.initialState);
-
   Future<void> initStepPermission();
 }
 
@@ -15,8 +13,10 @@ class PermissionViewModelImpl extends _ViewModel
     implements PermissionViewModel {
   final PermissionRepository permissionRepository;
 
-  PermissionViewModelImpl({required this.permissionRepository})
-    : super(PermissionModel());
+  PermissionViewModelImpl({required this.permissionRepository});
+
+  @override
+  PermissionModel build() => PermissionModel();
 
   @override
   Future<void> initStepPermission() async {
