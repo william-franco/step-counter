@@ -1,12 +1,27 @@
 # Step Counter
 
-Daily step tracking with permissions and settings.
+Tracks daily step counts using platform pedometer APIs with permission handling.
+
+Settings and dashboard views share repositories for goals and persisted preferences.
+
+Modular layout isolates sensor logic from UI and routing concerns.
+
+## Structure
+
+```mermaid
+flowchart LR
+  DashboardView --> StepViewModel
+  StepViewModel --> StepRepository
+  StepRepository --> PedometerPlugin
+  StepViewModel --> PermissionsService
+  StepRepository --> LocalSettings
+```
 
 ## Stack
 
 | Technology | Version |
 |------------|---------|
-| Dart SDK | ^3.13.2 |
+| Dart SDK | ^3.13.3 |
 | cupertino_icons | ^1.0.8 |
 | get_it | ^9.2.1 |
 | go_router | ^17.2.3 |
