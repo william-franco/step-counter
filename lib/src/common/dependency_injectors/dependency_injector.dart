@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:step_counter/src/common/services/storage_service.dart';
+import 'package:step_counter/src/common/services/url_launcher_service.dart';
 import 'package:step_counter/src/features/permission/view_models/permission_view_model.dart';
 import 'package:step_counter/src/features/permission/repositories/permission_repository.dart';
 import 'package:step_counter/src/features/settings/view_models/setting_view_model.dart';
@@ -10,6 +11,9 @@ import 'package:step_counter/src/features/step/repositories/step_repository.dart
 final locator = GetIt.instance;
 
 void dependencyInjector() {
+  locator.registerLazySingleton<UrlLauncherService>(
+    () => UrlLauncherServiceImpl(),
+  );
   _startStorageService();
   _startFeaturePermission();
   _startFeatureStep();
@@ -40,7 +44,10 @@ void _startFeatureStep() {
 
 void _startFeatureSetting() {
   locator.registerCachedFactory<SettingRepository>(
-    () => SettingRepositoryImpl(storageService: locator<StorageService>()),
+    () => SettingRepositoryImpl(
+      storageService: locator<StorageService>(),
+      urlLauncherService: locator<UrlLauncherService>(),
+    ),
   );
   locator.registerLazySingleton<SettingViewModel>(
     () => SettingViewModelImpl(settingRepository: locator<SettingRepository>()),

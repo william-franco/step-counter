@@ -61,9 +61,8 @@ void main() {
         'should emit StepModel with initial step count returned by getSteps',
         () async {
           // arrange
-          when(
-            mockStepRepository.setStepUpdateListener(any),
-          ).thenAnswer((_) {});
+          when(mockStepRepository.setStepUpdateListener(any))
+              .thenAnswer((_) {});
           when(mockStepRepository.startListening()).thenAnswer((_) async {
             return;
           });
@@ -213,31 +212,28 @@ void main() {
         },
       );
 
-      test(
-        'should update state via the listener callback registered in initialize',
-        () async {
-          // arrange — capture the callback inline so the stub is registered
-          // before initialize() runs and is not overwritten afterwards.
-          Future<void> Function(int)? registeredCallback;
-          when(mockStepRepository.setStepUpdateListener(any)).thenAnswer((inv) {
-            registeredCallback =
-                inv.positionalArguments.first as Future<void> Function(int);
-          });
-          when(mockStepRepository.startListening()).thenAnswer((_) async {
-            return;
-          });
-          when(mockStepRepository.getSteps()).thenAnswer((_) async => 0);
+      test('should update state via the listener callback registered in initialize', () async {
+        // arrange — capture the callback inline so the stub is registered
+        // before initialize() runs and is not overwritten afterwards.
+        Future<void> Function(int)? registeredCallback;
+        when(mockStepRepository.setStepUpdateListener(any)).thenAnswer((inv) {
+          registeredCallback =
+              inv.positionalArguments.first as Future<void> Function(int);
+        });
+        when(mockStepRepository.startListening()).thenAnswer((_) async {
+          return;
+        });
+        when(mockStepRepository.getSteps()).thenAnswer((_) async => 0);
 
-          // initialize fills registeredCallback via the stub above
-          await viewModel.initialize();
+        // initialize fills registeredCallback via the stub above
+        await viewModel.initialize();
 
-          // act — simulate native side pushing a new step count
-          await registeredCallback!(800);
+        // act — simulate native side pushing a new step count
+        await registeredCallback!(800);
 
-          // assert
-          expect(viewModel.state.steps, equals(800));
-        },
-      );
+        // assert
+        expect(viewModel.state.steps, equals(800));
+      });
     });
   });
 }

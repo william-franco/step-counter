@@ -42,9 +42,8 @@ void main() {
       test('should emit PermissionModel with isGranted true '
           'when repository returns true', () async {
         // arrange
-        when(
-          mockPermissionRepository.checkAndRequestPermission(),
-        ).thenAnswer((_) async => true);
+        when(mockPermissionRepository.checkAndRequestPermission())
+            .thenAnswer((_) async => true);
 
         final emittedStates = <PermissionModel>[];
         viewModel.addListener(() => emittedStates.add(viewModel.state));
@@ -61,9 +60,8 @@ void main() {
       test('should emit PermissionModel with isGranted false '
           'when repository returns false', () async {
         // arrange
-        when(
-          mockPermissionRepository.checkAndRequestPermission(),
-        ).thenAnswer((_) async => false);
+        when(mockPermissionRepository.checkAndRequestPermission())
+            .thenAnswer((_) async => false);
 
         final emittedStates = <PermissionModel>[];
         viewModel.addListener(() => emittedStates.add(viewModel.state));
@@ -77,9 +75,8 @@ void main() {
 
       test('should notify listeners exactly once per call', () async {
         // arrange
-        when(
-          mockPermissionRepository.checkAndRequestPermission(),
-        ).thenAnswer((_) async => true);
+        when(mockPermissionRepository.checkAndRequestPermission())
+            .thenAnswer((_) async => true);
 
         int notifyCount = 0;
         viewModel.addListener(() => notifyCount++);
@@ -93,9 +90,8 @@ void main() {
 
       test('should propagate exception thrown by repository', () async {
         // arrange
-        when(
-          mockPermissionRepository.checkAndRequestPermission(),
-        ).thenThrow(Exception('Error requesting permission: denied'));
+        when(mockPermissionRepository.checkAndRequestPermission())
+            .thenThrow(Exception('Error requesting permission: denied'));
 
         // act & assert
         expect(() => viewModel.initStepPermission(), throwsA(isA<Exception>()));
@@ -103,9 +99,8 @@ void main() {
 
       test('should not emit new state when repository throws', () async {
         // arrange
-        when(
-          mockPermissionRepository.checkAndRequestPermission(),
-        ).thenThrow(Exception('Error requesting permission: denied'));
+        when(mockPermissionRepository.checkAndRequestPermission())
+            .thenThrow(Exception('Error requesting permission: denied'));
 
         int notifyCount = 0;
         viewModel.addListener(() => notifyCount++);
@@ -124,26 +119,23 @@ void main() {
         'should reflect correct state after multiple sequential calls',
         () async {
           // arrange
-          when(
-            mockPermissionRepository.checkAndRequestPermission(),
-          ).thenAnswer((_) async => true);
+          when(mockPermissionRepository.checkAndRequestPermission())
+              .thenAnswer((_) async => true);
 
           // act — first call grants permission
           await viewModel.initStepPermission();
           expect(viewModel.state.isGranted, isTrue);
 
           // second call — permission revoked
-          when(
-            mockPermissionRepository.checkAndRequestPermission(),
-          ).thenAnswer((_) async => false);
+          when(mockPermissionRepository.checkAndRequestPermission())
+              .thenAnswer((_) async => false);
 
           await viewModel.initStepPermission();
 
           // assert
           expect(viewModel.state.isGranted, isFalse);
-          verify(
-            mockPermissionRepository.checkAndRequestPermission(),
-          ).called(2);
+          verify(mockPermissionRepository.checkAndRequestPermission())
+              .called(2);
         },
       );
     });
